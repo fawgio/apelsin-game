@@ -49,6 +49,7 @@ public class Apelsin extends ApplicationAdapter implements InputProcessor {
 	public static void play(int seed){
 		playing = true;
 		level = Randomizer.generate(seed);
+		level.create();
 		mainScreen.dispose();
 	}
 

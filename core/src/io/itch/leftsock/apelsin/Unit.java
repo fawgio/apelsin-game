@@ -57,8 +57,11 @@ public class Unit {
             if (nextOrange <= 3 && state == State.ORANGES)
                 state = State.FREE;
         }
-        if(eatOrange >= 0)
+        if(eatOrange >= 0){
             eatOrange -= delta;
+            if (nextOrange >= 1 && state == State.EATING)
+                state = State.FREE;
+        }
 
         for (Unit unit :
                 tribe.getLevel().getUnits()) {
@@ -92,11 +95,12 @@ public class Unit {
 
 
         if (eatOrange <= 0) {
+            state = State.EATING;
             tribe.eatOrange(this);
-            eatOrange = 10;
+            eatOrange = 10 + random.nextInt(5);
         }
 
-        if (state != State.FREE|| task == null) return;
+        if (state != State.FREE || task == null) return;
 
         targetX = (int) task.x;
         targetY = (int) task.y;
@@ -136,6 +140,7 @@ public class Unit {
     }
 
     public void stopMove(){
+        //task = null;
         state = State.FREE;
     }
 

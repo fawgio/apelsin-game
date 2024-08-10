@@ -4,5 +4,5 @@ public enum State {
     FREE,
     ORANGES,
     MOVING,
-    AVOIDING
+    EATING, AVOIDING
 }

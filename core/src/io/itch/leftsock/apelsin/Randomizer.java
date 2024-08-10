@@ -25,12 +25,11 @@ public class Randomizer {
         }
         level.userTribe = level.getTribes().get(0);
         level.setUnits(new ArrayList<>());
-        int units = random.nextInt(30);
-        for (int x = 0; x < units; x++) {
-            int tribeId = random.nextInt(tribes);
-            level.getUnits().add(new Unit(100 * (1+tribeId), 100 * (1+tribeId), level.getTribes().get(tribeId)));
-        }
-        level.create();
+        int units = (5 + random.nextInt(5)) * 3;
+        for (int i = 0; i < tribes; i++)
+            for (int x = 0; x < units / 3; x++) {
+                level.getUnits().add(new Unit(100 * (1+ i), 100 * (1+ i), level.getTribes().get(i)));
+            }
         return level;
     }
 }

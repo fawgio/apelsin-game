@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -26,9 +27,12 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.text.Format;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Level implements AScreen {
+    public static Texture orangeTexture = new Texture("orange.png");
+    public static Texture noOrangeTexture = new Texture("noOrange.png");
     Texture visCell;
     Texture orangeCell;
     Texture hiddenCell;
@@ -44,6 +48,10 @@ public class Level implements AScreen {
     Skin skin;
     Label orangesCountLabel;
     Label resultLabel;
+
+    ArrayList<Texture> toDraw = new ArrayList<>();
+    ArrayList<Vector2> toDrawXY = new ArrayList<>();
+    ArrayList<Integer> toDrawA = new ArrayList<>();
 
     public void create () {
         batch = new SpriteBatch();
@@ -104,15 +112,27 @@ public class Level implements AScreen {
                 } else {
                     boolean bots = false;
                     for (Tribe otherTribe:
-                            tribes)
-                        if (!otherTribe.equals(tribe)&&!tribe.equals(userTribe)&&!tribe.getUnits().isEmpty())
+                            tribes) {
+                        if (otherTribe.equals(userTribe)) continue;
+                        if (!otherTribe.getUnits().isEmpty()) {
                             bots = true;
+                            break;
+                        }
+                    }
                     if (!bots)
                         win();
                 }
             }
             if (tribe.equals(userTribe)) continue;
             Bot.move(tribe);
+        }
+
+        for (Unit unit : units){
+            switch (unit.getState()){
+                case ORANGES:
+                    batch.draw(orangeTexture, unit.getX(), unit.getY() + 10);
+                    break;
+            }
         }
         batch.end();
     }

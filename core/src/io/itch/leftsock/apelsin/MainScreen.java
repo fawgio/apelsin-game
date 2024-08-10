@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.util.Random;
+
 public class MainScreen implements AScreen, InputProcessor {
     private Stage stage;
     Skin skin;
@@ -29,8 +31,6 @@ public class MainScreen implements AScreen, InputProcessor {
         seed = new TextField("",skin);
         help = new TextButton("Help",skin);
         play.add(seed);
-
-
         table = new Table();
         stage.addActor(table);
         table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
